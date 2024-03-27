@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User page</title>
+    <!-- <link rel="stylesheet" href="./index.css"> -->
+    <style>
+        body{
+    max-width: 100%;
+    max-height: 100%;
+    background-color: #fff8f8;
+    font-family: Arial,sans-serif;
+    display: flex;
+    justify-content: center;
+    margin-top: 10%;
+}
+
+.container{
+    width: 400px;
+    display:flex;
+    align-items: center;
+    background-color: #fff6ff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.513);
+    padding: 30px;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+.user-image{
+    width: 180px;
+    height: 180px;
+    border-radius:50%;
+    object-fit: cover;
+    /* align-items: center; */
+    margin: 0 auto;
+}
+
+.image{
+    padding-left: 10px;
+    /* position: absolute; */
+}
+
+.user-name{
+    text-align: center;
+    margin:10px;
+    color:rgba(0, 0, 0, 0.619)
+}
+
+.description{
+    text-align: center;
+    margin: 10px;
+    white-space: nowrap;      
+    color:rgba(0, 0, 0, 0.639)
+}
+
+.user-email{
+    text-align: center;
+    margin: 10px;
+    color: rgba(43, 41, 41, 0.506);
+}
+.user-follwers{
+    text-align: center;
+    margin: 10px;
+    color: rgba(43, 41, 41, 0.506);
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="image">
+            <img src="https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg" alt="profile" class="user-image">
+        </div>
+        <div class="insider">
+            <h2 class="user-name" id="name">John Doe</h2>
+            <p class="description" id="userbio">Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            <p id="email" class="user-email" >Email : getting</p>
+            <p id="follower-count" class="user-follwers">Followers: 1000</p>
+        </div>
+    </div>
+</body>
+<script>
+
+    const userdata = async(req,res)=>{
+    try {
+        const resp = await fetch("http://localhost:3000/api/auth/userdata",{method:"GET",credentials:"include"})
+        if(!resp.ok){
+        //    window.location.href="http://127.0.0.1:5500/login.html"
+        console.error("Failed to fetch user data:", resp.statusText);
+    }
+
+        const {data}=await resp.json()
+        console.log(data);
+        const Username = document.getElementById("name")
+        const Usermail = document.getElementById("email")
+        const Userbio = document.getElementById("userbio")
+        // console.log(data.username);
+        Username.innerText = data.username
+        Usermail.innerText = data.email
+        Userbio.innerText = data.bio
+        
+
+    } catch (error) {
+        console.log(error.message)
+    //    window.location.href ="http://127.0.0.1:5500/login.html"
+    }
+}
+
+userdata()
+
+</script>
+</html>

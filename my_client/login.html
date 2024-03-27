@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+    <!-- <link rel="stylesheet" href="./login.css"> -->
+    <style>
+        body{
+            max-width: 100%;
+            max-height: 100%;
+            background-color: #fff8f8;
+            font-family: Arial,sans-serif;
+            display: flex;
+            justify-content: center;
+            box-sizing: border-box;
+            margin-top: 10%;
+        }
+
+        .container{
+            width: 350px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.513);
+            padding: 40px;
+            display: block;
+            border-radius: 8px;
+            background-color: #fff6ff;
+        }
+
+        h1{
+            text-align: center;
+            font-size: 30px;
+        }
+        label{
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+        border-radius: 4px;
+        }
+
+        .pass-word{
+            margin-top:25px;
+            margin-bottom: 25px;
+        }
+
+        .button-class{
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+
+        footer{
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+   
+        }
+
+        a{
+            color: rgb(118, 118, 118);
+            text-decoration: none;
+        }
+
+        .button-class{
+            width: 100%;
+            padding:8px;
+            margin-top: 3px;
+            background-color: rgb(15, 133, 243);
+            color: white;
+            font-weight: 700;
+            border: 0 ;
+            border-radius: 4px;
+        }
+
+        .button-class:hover{
+            cursor: pointer;
+
+            background-color: rgb(28, 117, 190);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Login</h1>
+        <div class="form">
+            <form>
+                <div class="user-name">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username">
+                </div>
+                <div class="pass-word">
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" placeholder="Enter your password">
+                </div>
+            </form>
+        </div>
+        <button class="button-class" id="button" type="submit">Log In</button>
+        <footer>
+            <a href="#" class="a">Forgot Password?</a>
+            <a href="./register.html" class="a">Sign Up</a>
+        </footer>
+    </div>
+    <!-- <script src="./login.js"></script> -->
+</body>
+<script>
+    const formSubmit = document.getElementById("button")
+
+formSubmit.addEventListener("click",(event)=>{
+    event.preventDefault();
+    const userName = document.getElementById("username").value
+    const passcode = document.getElementById("password").value
+    const userData = {
+        username:userName,
+        password:passcode
+    }
+    loginUser(userData)
+})
+
+const loginUser = async(userdat)=>{
+    try {
+        const resp = await fetch("http://localhost:3000/api/auth/login",{
+            method:"POST",
+            credentials:"include",
+            redirect:"follow",
+            headers:{"content-type":"application/json"},
+            body:JSON.stringify(userdat)
+        })
+
+        const data = await resp.json()
+        console.log(data);
+        window.location.href = "http://127.0.0.1:5500/index.html"
+    } catch (error) {
+        console.log(error.message);
+    }
+}
+</script>
+</html>
